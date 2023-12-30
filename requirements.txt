@@ -1,0 +1,33 @@
+aiodns==3.0.0
+aiohttp==3.8.5
+aiosignal==1.3.1
+async-timeout==4.0.3
+attrs==23.1.0
+Bottleneck @ file:///Users/ec2-user/ci_py311/bottleneck_1678322312632/work
+ccxt==4.0.65
+ccxtpro==1.0.1
+certifi==2023.7.22
+cffi==1.15.1
+charset-normalizer==3.2.0
+cryptography==41.0.3
+frozenlist==1.4.0
+idna==3.4
+mkl-fft==1.3.6
+mkl-random @ file:///Users/ec2-user/mkl/mkl_random_1682994911338/work
+mkl-service==2.4.0
+multidict==6.0.4
+numexpr @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_1b50c1js9s/croot/numexpr_1683227065029/work
+numpy @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_2ajpp3regc/croot/numpy_and_numpy_base_1691164374110/work
+pandas==1.5.3
+psutil==5.9.5
+pybit==5.4.0
+pycares==4.3.0
+pycparser==2.21
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz @ file:///Users/ec2-user/ci_py311/pytz_1678318034461/work
+requests==2.31.0
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+urllib3==2.0.4
+websocket-client==1.5.0
+websockets==11.0.3
+yarl==1.9.2

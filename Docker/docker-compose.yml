@@ -1,0 +1,21 @@
+services:
+  redis:
+    container_name: redis-container
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  # robot:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/RobotDockerfile
+  #   container_name: robot-container
+  #   depends_on:
+  #     - redis
+  #   volumes:
+  #     - volume_dump:/python_user/app/dump
+  #   environment:
+  #     - TF_VAR_DEGIRO_ACCOUNT={"user_token":788406, "int_account":11038497, "username":"chavithra", "password":"s117RdLw0dPvmRNhnqRb", "totp_secret_key":"CBMZJCNMB6SSZXM42Q6CEBHZWFVTSVCH"}
+
+volumes:
+  volume_dump:
