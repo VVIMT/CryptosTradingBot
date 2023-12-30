@@ -15,7 +15,7 @@ services:
   #   volumes:
   #     - volume_dump:/python_user/app/dump
   #   environment:
-  #     - TF_VAR_DEGIRO_ACCOUNT={"user_token":788406, "int_account":11038497, "username":"chavithra", "password":"s117RdLw0dPvmRNhnqRb", "totp_secret_key":"CBMZJCNMB6SSZXM42Q6CEBHZWFVTSVCH"}
+  #     - TF_VAR_DEGIRO_ACCOUNT={"user_token":, "int_account":, "username":"", "password":"", "totp_secret_key":""}
 
 volumes:
   volume_dump:
