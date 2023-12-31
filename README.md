@@ -82,7 +82,7 @@ CryptoTradingBot/
 
 4. **Run the Script (Choose 'bybit' or 'binance')**:
    ```bash
-   python main.py --mode gather_data --exchange bybit --symbol BTC/USDT
+   python main.py --mode gather_data --exchange bybit --symbol BTC/USDT > output.log 2>&1 &
    ```
 
 ### Additional Information
