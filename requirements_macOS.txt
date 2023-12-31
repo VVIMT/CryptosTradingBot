@@ -1,0 +1,32 @@
+aiodns==3.1.1
+aiohttp==3.9.1
+aiosignal==1.3.1
+attrs==23.1.0
+Bottleneck @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/bottleneck_1699265217545/work
+ccxt==4.2.2
+certifi==2023.11.17
+cffi==1.16.0
+charset-normalizer==3.3.2
+cryptography==41.0.7
+frozenlist==1.4.1
+idna==3.6
+mkl-fft @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_fft_1699240945874/work
+mkl-random @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_random_1699239515205/work
+mkl-service==2.4.0
+multidict==6.0.4
+numexpr @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/numexpr_1699258484110/work
+numpy @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_dfryapvjbb/croot/numpy_and_numpy_base_1701362404676/work/dist/numpy-1.26.2-cp312-cp312-macosx_10_9_x86_64.whl#sha256=49cd3da81e26182bbc42dc2de96aa0273a6a603dc26a1cbd05b2f0d2b45e7de7
+pandas @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_80pc5xjc2v/croot/pandas_1702317994691/work/dist/pandas-2.1.4-cp312-cp312-macosx_10_9_x86_64.whl#sha256=3eb67228f50b9e8d5582980f2be6c270d3bf7a66c1f08a7514dc2daaa6de26d6
+psutil @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/psutil_1699246686105/work
+pycares==4.4.0
+pycparser==2.21
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/pytz_1699244189577/work
+requests==2.31.0
+setuptools==68.2.2
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+typing_extensions==4.9.0
+tzdata @ file:///croot/python-tzdata_1690578112552/work
+urllib3==2.1.0
+wheel==0.41.2
+yarl==1.9.4
