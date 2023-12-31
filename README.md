@@ -59,7 +59,7 @@ CryptoTradingBot/
 
 ### Requirements
 
-- Python 3.11 (Recommended)
+- Python 3.12 (Recommended)
 - Libraries: `asyncio`, `pandas`, `ccxt`, `ccxtpro`
 
 ### Installation Guide
