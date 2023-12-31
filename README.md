@@ -1,4 +1,4 @@
-# CryptoTradingBot
+# CryptosTradingBot
 
 ## Overview
 
