@@ -9,16 +9,16 @@ This project consists of a trading bot that fetches real-time order book data fo
 ```
 CryptoTradingBot/
 ├── core/
-│   ├── exchange_init.py  # Contains the initialize_exchange function
-│   ├── exchange.py       # Modified to include WebSocket reconnection
-│   ├── writer.py         # Handles writing data to files
-│   └── monitoring.py     # Moved from utils to core for better categorization
+│   ├── exchange_init.py
+│   ├── exchange.py
+│   ├── writer.py
+│   └── monitoring.py
 ├── utils/
-│   ├── input_args.py     # Parses command-line arguments
-│   └── websocket_utils.py # New file for WebSocket reconnection logic
-├── main.py               # Main script, updated for asyncio management
-├── README.md             # Documentation of the project
-└── requirements.txt      # Lists dependencies for the project
+│   ├── input_args.py
+│   └── websocket_utils.py
+├── main.py
+├── README.md
+└── requirements.txt
 
 ```
 
