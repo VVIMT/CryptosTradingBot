@@ -20,15 +20,13 @@ class SharedState:
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
-# Parse command-line arguments
-args = parse_args()
 
 async def window(state, hours, minutes, seconds):
     total_seconds = hours * 3600 + minutes * 60 + seconds
     await asyncio.sleep(total_seconds)
     state.registering = False
 
-def main():
+async def run_main():
     state = SharedState()
     # Initialize the exchange
     API_KEY = os.environ.get(f'{args.exchange.upper()}_API_KEY')
@@ -42,9 +40,8 @@ def main():
         writer_thread_obj.daemon = True
         writer_thread_obj.start()
 
-    loop = asyncio.get_event_loop()
-    loop.create_task(window(state, hours=args.hours, minutes=args.minutes, seconds=args.seconds))
-    loop.run_until_complete(fetch_orderbook(state, exchange, args))
+    await asyncio.create_task(window(state, hours=args.hours, minutes=args.minutes, seconds=args.seconds))
+    await fetch_orderbook(state, exchange, args)
 
     if args.mode == "gather_data" and not state.orderbooks_df.empty:
         with open(state.csv_filepath, mode='a', newline='') as file:
@@ -54,7 +51,8 @@ def main():
             print(state.orderbooks_df.head(args.print))
 
     print_resources_consumption()
-    loop.run_until_complete(exchange.close())
+    await exchange.close()
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    asyncio.run(run_main())

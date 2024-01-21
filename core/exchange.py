@@ -2,6 +2,7 @@ import ccxt
 import ccxt.pro as ccxtpro
 import pandas as pd
 import logging
+from utils.websocket_utils import handle_websocket_reconnection
 
 def initialize_exchange(exchange_name, api_key, api_secret):
     exchange = getattr(ccxtpro, exchange_name)({
@@ -35,16 +36,13 @@ async def fetch_orderbook(state, exchange, args):
                 state.data_queue.put(state.orderbooks_df)  # Put data into the queue
                 state.orderbooks_df = pd.DataFrame()
 
-        except ccxt.RequestTimeout as e:
-            logging.error(f"Request timeout error: {e}")
-        except ccxt.ExchangeError as e:
+        except ccxt.NetworkError as e:
+            logging.error(f"Network error (possible disconnection): {e}")
+            if not await handle_websocket_reconnection(exchange):
+                break  # Exit the loop if reconnection failed
+        except (ccxt.RequestTimeout, ccxt.ExchangeError, ccxt.AuthenticationError, 
+                ccxt.DDoSProtection, ccxt.RateLimitExceeded) as e:
             logging.error(f"Exchange error: {e}")
-        except ccxt.AuthenticationError as e:
-            logging.error(f"Authentication error: {e}")
-        except ccxt.DDoSProtection as e:
-            logging.error(f"DDoS Protection error: {e}")
-        except ccxt.RateLimitExceeded as e:
-            logging.error(f"Rate limit exceeded error: {e}")
         except Exception as e:
             logging.error(f"An unexpected error occurred: {e}")
 
