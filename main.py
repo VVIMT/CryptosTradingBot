@@ -6,7 +6,7 @@ from threading import Thread
 import pandas as pd
 from core.exchange_init import initialize_exchange
 from core.exchange import fetch_orderbook
-from core.writer import writer_thread, data_file
+from core.data_writer import writer_thread, data_file
 from utils.monitoring import print_resources_consumption
 from utils.input_args import parse_args
 

@@ -11,7 +11,7 @@ CryptoTradingBot/
 ├── core/
 │   ├── exchange_init.py
 │   ├── exchange.py
-│   ├── writer.py
+│   ├── data_writer.py
 │   └── monitoring.py
 ├── utils/
 │   ├── input_args.py
