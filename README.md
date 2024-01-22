@@ -15,7 +15,8 @@ CryptoTradingBot/
 │   └── monitoring.py
 ├── utils/
 │   ├── input_args.py
-│   └── websocket_utils.py
+│   ├── websocket_handler.py
+│   └── log_config.py
 ├── main.py
 ├── README.md
 └── requirements.txt

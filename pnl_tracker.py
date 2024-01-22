@@ -1,7 +1,7 @@
 import argparse
-from datetime import datetime
 import asyncio
 import os
+from datetime import datetime
 from core.exchange_init import initialize_exchange
 
 # Function to parse command-line arguments for date range
@@ -25,8 +25,6 @@ def str_to_timestamp(date_str):
 class PnLTracker:
     def __init__(self, exchange):
         self.exchange = exchange
-        self.trades = []
-        self.deposits = []
 
     async def fetch_exchange_rate(self):
         ticker = await self.exchange.fetch_ticker('USDT/EUR')
@@ -43,45 +41,36 @@ class PnLTracker:
             if not deposits:
                 break
             all_deposits.extend(deposits)
-            # Update 'since' to fetch next batch of deposits if there are more than 50
             since = deposits[-1]['timestamp'] + 1
-        self.deposits = all_deposits
+        return all_deposits
 
-    def calculate_pnl(self, exchange_rate_usd_to_eur, start_date=None, end_date=None):
-        start_ts = str_to_timestamp(start_date) if start_date else None
-        end_ts = str_to_timestamp(end_date) if end_date else None
-        filtered_trades = [
-            t for t in self.trades if 
-            (not start_ts or t['timestamp'] >= start_ts) and 
-            (not end_ts or t['timestamp'] <= end_ts)
-        ]
-        total_pnl_usd = sum(
-            (t['price'] - t['cost']) * t['amount'] for t in filtered_trades
-        )
-        # Convert USD PnL to EUR using the fetched exchange rate
-        total_pnl_eur = total_pnl_usd / exchange_rate_usd_to_eur if exchange_rate_usd_to_eur else None
-        return total_pnl_usd, total_pnl_eur
+    def calculate_pnl(self, deposits, exchange_rate_usd_to_eur):
+        total_deposits_usd = sum(d['amount'] for d in deposits)
+        total_pnl_eur = total_deposits_usd / exchange_rate_usd_to_eur if exchange_rate_usd_to_eur else None
+        return total_pnl_eur
 
 # Main function
 async def main():
     args = parse_dates()
-    exchange = initialize_exchange(
-        args.exchange, 
-        os.getenv(f'{args.exchange.upper()}_API_KEY'), 
-        os.getenv(f'{args.exchange.upper()}_API_SECRET')
-    )
-    pnl_tracker = PnLTracker(exchange)
-    exchange_rate_usd_to_eur = await pnl_tracker.fetch_exchange_rate()
-    await pnl_tracker.fetch_all_deposits(
-        args.currency, start_date=args.start_date, end_date=args.end_date
-    )
-    pnl_usd, pnl_eur = pnl_tracker.calculate_pnl(
-        exchange_rate_usd_to_eur, 
-        start_date=args.start_date, 
-        end_date=args.end_date
-    )
-    print(f"PnL USD: {pnl_usd}, PnL EUR: {pnl_eur}")
-    await exchange.close()
+    exchange = None
+    try:
+        exchange = initialize_exchange(
+            args.exchange, 
+            os.getenv(f'{args.exchange.upper()}_API_KEY'), 
+            os.getenv(f'{args.exchange.upper()}_API_SECRET')
+        )
+        pnl_tracker = PnLTracker(exchange)
+        exchange_rate_usd_to_eur = await pnl_tracker.fetch_exchange_rate()
+        deposits = await pnl_tracker.fetch_all_deposits(
+            args.currency, start_date=args.start_date, end_date=args.end_date
+        )
+        pnl_eur = pnl_tracker.calculate_pnl(
+            deposits, exchange_rate_usd_to_eur
+        )
+        print(f"PnL EUR: {pnl_eur}")
+    finally:
+        if exchange:
+            await exchange.close()
 
 if __name__ == "__main__":
     asyncio.run(main())

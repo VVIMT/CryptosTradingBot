@@ -5,6 +5,7 @@ import ccxt
 def parse_args():
     parser = argparse.ArgumentParser(description="A trading bot using CCXT Pro for real-time data from exchanges.")
     parser.add_argument("--mode", type=str, choices=["feed_model", "gather_data"], default="feed_model", help="Choose between 'feed_model' and 'gather_data' modes.")
+    parser.add_argument("--debug_mode", type=bool, default=False, help="Enable debug mode for verbose logging.")
     parser.add_argument("--batch_size", type=int, default=1000, help="Specify the batch size for saving data to CSV.")
     parser.add_argument("--exchange", type=str, choices=["bybit", "binance"], required=True, help="Specify the exchange to fetch data from.")
     parser.add_argument("--symbol", type=str, default="BTC/USDT", help="Specify the trading pair to fetch data for, e.g., 'BTC/USD'.")

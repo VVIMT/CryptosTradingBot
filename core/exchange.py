@@ -2,7 +2,7 @@ import ccxt
 import ccxt.pro as ccxtpro
 import pandas as pd
 import logging
-from utils.websocket_utils import handle_websocket_reconnection
+from utils.websocket_handler import handle_websocket_reconnection
 
 def initialize_exchange(exchange_name, api_key, api_secret):
     exchange = getattr(ccxtpro, exchange_name)({

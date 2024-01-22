@@ -1,6 +1,16 @@
+import logging
 import time
 import resource
 import psutil
+
+# Import the custom log level
+from utils.log_config import RESOURCE_CONSUMPTION_LEVEL
+
+# Initialize the logger for resource consumption
+resource_logger = logging.getLogger('resource_consumption')
+
+def log_resource_consumption(msg, *args, **kwargs):
+    resource_logger.log(RESOURCE_CONSUMPTION_LEVEL, msg, *args, **kwargs)
 
 def get_cpu_usage_percentage():
     return psutil.cpu_percent(interval=0.1)
@@ -25,18 +35,17 @@ def calculate_throughput():
     return sent_throughput, recv_throughput
 
 def print_resources_consumption():
-    with open("resources_consumption.log", "w") as log_file:
-        usage = resource.getrusage(resource.RUSAGE_SELF)
-        log_file.write(f"User CPU time used (seconds): {usage.ru_utime}\n")
-        log_file.write(f"System CPU time used (seconds): {usage.ru_stime}\n")
-        log_file.write(f"Maximum resident set size (kilobytes): {usage.ru_maxrss}\n")
-        log_file.write(f"Soft page faults: {usage.ru_minflt}\n")
-        log_file.write(f"Hard page faults: {usage.ru_majflt}\n")
-        log_file.write(f"Voluntary context switches: {usage.ru_nvcsw}\n")
-        log_file.write(f"Involuntary context switches: {usage.ru_nivcsw}\n")
-        log_file.write(f"CPU usage percentage: {get_cpu_usage_percentage()} %\n")
-        log_file.write(f"Memory usage percentage: {get_memory_usage_percentage()} %\n")
+    usage = resource.getrusage(resource.RUSAGE_SELF)
+    log_resource_consumption(f"User CPU time used (seconds): {usage.ru_utime}")
+    log_resource_consumption(f"System CPU time used (seconds): {usage.ru_stime}")
+    log_resource_consumption(f"Maximum resident set size (kilobytes): {usage.ru_maxrss}")
+    log_resource_consumption(f"Soft page faults: {usage.ru_minflt}")
+    log_resource_consumption(f"Hard page faults: {usage.ru_majflt}")
+    log_resource_consumption(f"Voluntary context switches: {usage.ru_nvcsw}")
+    log_resource_consumption(f"Involuntary context switches: {usage.ru_nivcsw}")
+    log_resource_consumption(f"CPU usage percentage: {get_cpu_usage_percentage()} %")
+    log_resource_consumption(f"Memory usage percentage: {get_memory_usage_percentage()} %")
 
-        sent_throughput, recv_throughput = calculate_throughput()
-        log_file.write(f"Upload throughput (Mbps): {sent_throughput}\n")
-        log_file.write(f"Download throughput (Mbps): {recv_throughput}\n")
+    sent_throughput, recv_throughput = calculate_throughput()
+    log_resource_consumption(f"Upload throughput (Mbps): {sent_throughput}")
+    log_resource_consumption(f"Download throughput (Mbps): {recv_throughput}")
