@@ -1,8 +1,10 @@
+import os
+import logging
 import ccxt
 import ccxt.pro as ccxtpro
-import logging
 
-def initialize_exchange(exchange_name, api_key, api_secret):
+
+def init_exchange(exchange_name, api_key, api_secret):
     try:
         exchange_class = getattr(ccxtpro, exchange_name)
         if not exchange_class:
@@ -25,3 +27,10 @@ def initialize_exchange(exchange_name, api_key, api_secret):
         logging.error(f"Unexpected error occurred while initializing {exchange_name} exchange: {e}")
 
     return None
+
+def get_api_keys(exchange_name):
+    API_KEY = os.environ.get(f'{exchange_name.upper()}_API_KEY')
+    API_SECRET = os.environ.get(f'{exchange_name.upper()}_API_SECRET')
+    if not API_KEY or not API_SECRET:
+        raise ValueError(f"API key and secret for {exchange_name} must be set as environment variables")
+    return API_KEY, API_SECRET
