@@ -8,15 +8,21 @@ This project consists of a trading bot that fetches real-time order book data fo
 
 ```
 CryptoTradingBot/
+CryptosTradingBot/
 ├── core/
+│   ├── data_writer.py
 │   ├── exchange_init.py
 │   ├── exchange.py
-│   ├── data_writer.py
-│   └── monitoring.py
+│   ├── orchestrator.py
+│   ├── orders.py
+├── data/
+├── Docker/
+├── Logs/
 ├── utils/
 │   ├── input_args.py
+│   ├── log_config.py
+│   ├── monitoring.py
 │   ├── websocket_handler.py
-│   └── log_config.py
 ├── main.py
 ├── README.md
 └── requirements.txt
