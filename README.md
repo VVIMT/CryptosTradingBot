@@ -7,7 +7,6 @@ This project consists of a trading bot that fetches real-time order book data fo
 ## Directory Structure
 
 ```
-CryptoTradingBot/
 CryptosTradingBot/
 ├── core/
 │   ├── data_writer.py
