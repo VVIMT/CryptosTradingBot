@@ -4,10 +4,12 @@ from queue import Queue
 from threading import Thread
 import pandas as pd
 import logging
+import random
 from core.exchange_init import init_exchange, get_api_keys
 from core.exchange import fetch_orderbook
 from core.orders import *
 from core.data_writer import writer_thread, data_file
+from utils.websocket_handler import handle_websocket_reconnection
 from utils.monitoring import print_resources_consumption
 from utils.input_args import parse_args
 from utils.log_config import setup_logging
@@ -43,7 +45,17 @@ def start_writer_thread(state, args):
 async def run_fetch_orderbook(state, exchange, args):
     loop = asyncio.get_event_loop()
     loop.create_task(window(state, hours=args.hours, minutes=args.minutes, seconds=args.seconds))
-    await fetch_orderbook(state, exchange, args)
+    while state.registering:
+        try:
+            await fetch_orderbook(state, exchange, args)
+        except ccxt.NetworkError as e:
+            logging.error(f"Network error occurred: {e}. Attempting to reconnect...")
+            success = await handle_websocket_reconnection(exchange)
+            if not success:
+                break
+        except Exception as e:
+            logging.error(f"An unexpected error occurred: {e}")
+            break
 
 def write_remaining_data(state):
     if state.csv_filepath and not state.orderbooks_df.empty:

@@ -30,8 +30,6 @@ async def handle_websocket_reconnection(exchange, attempt=0):
 
             await close_and_sleep(wait_time)
             await exchange.load_markets(reload=True)
-            # Add additional steps here to ensure the state of your bot is
-            # consistent with the market
 
             logging.info(f"Successfully reconnected to {exchange.name}.")
             return True  # Successful reconnection
@@ -41,14 +39,12 @@ async def handle_websocket_reconnection(exchange, attempt=0):
                             f"cancelled for {exchange.name}.")
             raise
 
-        except Exception as specific_error:  # Catch specific exceptions when possible
+        except Exception as specific_error:
             logging.exception(f"Reconnection attempt {attempt + 1} failed for "
                               f"{exchange.name}: {specific_error}")
             attempt += 1
 
     logging.error(f"Maximum reconnection attempts reached for {exchange.name}. "
                   f"Initiating shutdown...")
-    # Clean up resources and shutdown procedures
     await exchange.close()
-    # Consider adding a notification or alert system here
     return False
